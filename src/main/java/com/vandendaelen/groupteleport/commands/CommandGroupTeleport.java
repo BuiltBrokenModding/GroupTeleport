@@ -112,7 +112,9 @@ public class CommandGroupTeleport extends CommandTeleport {
 
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return super.getTabCompletions(server, sender, args, targetPos);
+        if (args.length == 0)
+            return getListOfStringsMatchingLastWord(args, subcommands);
+        return Collections.emptyList();
     }
 
     public static class Permission{
