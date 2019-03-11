@@ -85,7 +85,7 @@ public class CommandGroupTeleport extends CommandTeleport {
                     throw new CommandException(MessageFormat.format("/{0} regex x y z <regexp>", getName()));
                 Pattern pattern;
                 Matcher matcher;
-                pattern = Pattern.compile(args[5]);
+                pattern = Pattern.compile(args[4]);
                 for(EntityPlayerMP playerMP : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()){
                     matcher = pattern.matcher(playerMP.getDisplayNameString());
                     if (matcher.find())
