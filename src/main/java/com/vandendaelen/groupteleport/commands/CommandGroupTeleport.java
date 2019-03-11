@@ -41,13 +41,13 @@ public class CommandGroupTeleport extends CommandTeleport {
         for (String sc : subcommands.subList(1,subcommands.size())) {
             usageString.append(MessageFormat.format(" | {0}", sc));
         }
-
+        usageString.append(" x y z <arg>");
         return usageString.toString();
     }
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (!subcommands.contains(args[0]) && args.length >= 4)
+        if (!subcommands.contains(args[0]) || args.length < 4)
             throw new CommandException("Error : " + getUsage(sender));
 
         Vec3d vec3d = sender.getPositionVector();
@@ -112,8 +112,11 @@ public class CommandGroupTeleport extends CommandTeleport {
 
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 0)
+        if (args.length == 1)
             return getListOfStringsMatchingLastWord(args, subcommands);
+        if (args.length >= 5 && args[0].equals("list")){
+            return getListOfStringsMatchingLastWord(args, Arrays.asList(FMLCommonHandler.instance().getMinecraftServerInstance().getOnlinePlayerNames()));
+        }
         return Collections.emptyList();
     }
 

@@ -3,6 +3,7 @@ package com.vandendaelen.groupteleport;
 import com.vandendaelen.groupteleport.commands.CommandGroupTeleport;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -30,11 +31,14 @@ public class GroupTeleport {
     public static GroupTeleport INSTANCE;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent e) {
+    public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        PermissionAPI.registerNode(CommandGroupTeleport.Permission.GROUP_TELEPORT, DefaultPermissionLevel.OP, "Allows /gtp commands");
     }
 
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event){
+        PermissionAPI.registerNode(CommandGroupTeleport.Permission.GROUP_TELEPORT, DefaultPermissionLevel.OP, "Allows /gtp commands");
+    }
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandGroupTeleport());
